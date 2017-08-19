@@ -9,6 +9,7 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
+import static java.util.Objects.requireNonNull;
 
 /**
  * An entry in a SlackLog.
@@ -39,6 +40,8 @@ import static java.util.Collections.unmodifiableList;
  * </p>
  */
 public class SlackLogEntry extends PyObjectWrapper {
+    private final SlackLog log;
+
     /*
     public SlackLogEntry(final ZonedDateTime timestamp,
                          final String description,
@@ -57,8 +60,13 @@ public class SlackLogEntry extends PyObjectWrapper {
     }
     */
 
-    public SlackLogEntry(final PyObject pyInstance) {
+    public SlackLogEntry(final PyObject pyInstance, final SlackLog log) {
+        requireNonNull(pyInstance);
+        requireNonNull(log);
+        if (pyInstance.__getattr__("log") != log.unwrap())
+            throw new IllegalArgumentException("wrong log");
         this.pyInstance = pyInstance;
+        this.log = log;
     }
 
     /*
@@ -72,7 +80,7 @@ public class SlackLogEntry extends PyObjectWrapper {
     }
 
     public SlackLog getLog() {
-        return new SlackLog(getattr("log"));
+        return log;
     }
 
     public String getChecksum() {
@@ -87,6 +95,15 @@ public class SlackLogEntry extends PyObjectWrapper {
         return getattr("parent", String.class);
     }
 
+    /**
+     * Returns the list of packages in this entry.
+     * <p>
+     *     The returned list is an unmodifiable list.  The elements in the
+     *     list are, however, not immutable.  In other words, while elements
+     *     can not be added, removed, or replaced, they can be modified.
+     * </p>
+     * @return A non-null list of {@link SlackLogPkg} instances.
+     */
     public List<SlackLogPkg> getPkgs() {
         final PyObject pySeq = getattr("pkgs");
         if (pySeq == null || pySeq.equals(Py.None) || !pySeq.isSequenceType())
@@ -97,7 +114,8 @@ public class SlackLogEntry extends PyObjectWrapper {
         final List<SlackLogPkg> list = new ArrayList<>(len);
 
         for (int i = 0; i < len; i++) {
-            list.add(new SlackLogPkg(pySeq.__getitem__(i)));
+            final PyObject pyPkg = pySeq.__getitem__(i);
+            list.add(new SlackLogPkg(pyPkg, this));
         }
 
         return unmodifiableList(list);
@@ -128,4 +146,8 @@ public class SlackLogEntry extends PyObjectWrapper {
         //setattr("pkgs", pkgs);
     }
     */
+
+    public PyObject unwrap() {
+        return pyInstance;
+    }
 }

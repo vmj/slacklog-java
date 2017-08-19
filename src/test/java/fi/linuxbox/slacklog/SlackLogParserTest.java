@@ -71,7 +71,7 @@ public class SlackLogParserTest extends JythonTestSupport {
 
         final SlackLogEntry slackLogEntry = entries.get(0);
         assertNotNull(slackLogEntry);
-        assertNotNull(slackLogEntry.getLog());
+        assertTrue(slackLogEntry.getLog() == slacklog);
         assertEquals("", slackLogEntry.getDescription());
 
         final List<SlackLogPkg> pkgs = slackLogEntry.getPkgs();
@@ -80,7 +80,7 @@ public class SlackLogParserTest extends JythonTestSupport {
 
         final SlackLogPkg slackLogPkg = pkgs.get(0);
         assertNotNull(slackLogPkg);
-        assertNotNull(slackLogPkg.getEntry());
+        assertTrue(slackLogPkg.getEntry() == slackLogEntry);
         assertEquals("patches/packages/libtiff-3.9.7-i486-1_slack12.2.tgz", slackLogPkg.getPkg());
         assertTrue(slackLogPkg.getDescription().startsWith("  Upgraded.\n"));
         assertTrue(slackLogPkg.getDescription().endsWith("  (* Security fix *)\n"));

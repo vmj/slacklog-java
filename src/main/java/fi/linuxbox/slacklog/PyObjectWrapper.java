@@ -53,6 +53,13 @@ public abstract class PyObjectWrapper {
         pyInstance.__setattr__(name, pyValue);
     }
 
+    protected void setattr(final String name, final Integer value) {
+        final PyObject pyValue = value != null
+                ? Py.newInteger(value)
+                : Py.None;
+        pyInstance.__setattr__(name, pyValue);
+    }
+
     protected void setattr(final String name, final ZonedDateTime value) {
         // TODO: ZonedDateTime -> datetime.datetime
     }

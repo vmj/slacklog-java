@@ -1,8 +1,9 @@
 package fi.linuxbox.slacklog.models;
 
 import fi.linuxbox.slacklog.PyObjectWrapper;
-import org.python.core.Py;
 import org.python.core.PyObject;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * An entry in a SlackLogEntry.
@@ -11,6 +12,8 @@ import org.python.core.PyObject;
  * </p>
  */
 public class SlackLogPkg extends PyObjectWrapper {
+    private final SlackLogEntry entry;
+
     /*
     public SlackLogPkg(final String pkg,
                        final String description,
@@ -23,8 +26,13 @@ public class SlackLogPkg extends PyObjectWrapper {
     }
     */
 
-    public SlackLogPkg(final PyObject pyInstance) {
+    public SlackLogPkg(final PyObject pyInstance, final SlackLogEntry entry) {
+        requireNonNull(pyInstance);
+        requireNonNull(entry);
+        if (pyInstance.__getattr__("entry") != entry.unwrap())
+            throw new IllegalArgumentException("wrong entry");
         this.pyInstance = pyInstance;
+        this.entry = entry;
     }
 
 
@@ -37,7 +45,7 @@ public class SlackLogPkg extends PyObjectWrapper {
     }
 
     public SlackLogEntry getEntry() {
-        return new SlackLogEntry(getattr("entry"));
+        return entry;
     }
 
     /*
