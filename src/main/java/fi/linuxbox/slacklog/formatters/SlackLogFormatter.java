@@ -10,6 +10,10 @@ public class SlackLogFormatter extends PyObjectWrapper {
         super(SlackLogFormatter.class);
     }
 
+    protected SlackLogFormatter(final Class<? extends SlackLogFormatter> klass) {
+        super(klass);
+    }
+
     public void setMaxEntries(final Integer maxEntries) {
         setattr("max_entries", maxEntries);
     }
