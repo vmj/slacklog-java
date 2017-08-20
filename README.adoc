@@ -1,0 +1,3 @@
+# Slacklog Java
+
+Java wrapper for Python https://pypi.python.org/pypi/slacklog[slacklog] module.
