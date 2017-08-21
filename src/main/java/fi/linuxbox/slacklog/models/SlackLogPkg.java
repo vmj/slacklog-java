@@ -6,7 +6,7 @@ import org.python.core.PyObject;
 import static java.util.Objects.requireNonNull;
 
 /**
- * An entry in a SlackLogEntry.
+ * An entry in a {@link SlackLogEntry}.
  * <p>
  *     Consists of a unicode package identifier and a unicode description.
  * </p>

@@ -18,7 +18,7 @@ import static java.util.Objects.requireNonNull;
  *     empty.
  * </p>
  * <p>
- *     Also contains a list of SlackLogPkg objects.
+ *     Also contains a list of {@link SlackLogPkg} objects.
  * </p>
  * <p>
  *     Since 0.9.1 a checksum was added, which is either None or a unicode

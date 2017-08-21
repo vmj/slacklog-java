@@ -6,7 +6,7 @@ import org.python.core.Py;
 import org.python.core.PyObject;
 
 /**
- * A Java class that exposes only the needed APIs from SlackLogParser Python class.
+ * Parser for recent (12.x and newer) Slackware ChangeLogs.
  */
 public class SlackLogParser extends PyObjectWrapper {
     public SlackLogParser() {
@@ -14,16 +14,16 @@ public class SlackLogParser extends PyObjectWrapper {
     }
 
     /**
-     * Exposes the SlackLogParser.quiet property to the Java land.
+     * Whether warnings about date parsing are printed.
      *
-     * @param quiet false if output is allowed
+     * @param quiet {@code true} if output is not allowed
      */
     public void setQuiet(final boolean quiet) {
         setattr("quiet", quiet);
     }
 
     /**
-     * Exposes the SlackLogParser.min_date property to the Java land.
+     * Older log entries are ignored (not parsed).
      * <p>
      *     Note: Use the {@link #parseDate(String)} to create the
      *     'datetime.datetime' or 'None' argument.
@@ -35,10 +35,10 @@ public class SlackLogParser extends PyObjectWrapper {
     }
 
     /**
-     * Exposes the SlackLogParser.parse method to the Java land.
+     * EReturn the in-memory representation of the data.
      *
      * @param data ChangeLog.txt contents
-     * @return SlackLog python object
+     * @return {@link SlackLog} instance
      */
     public SlackLog parse(final String data) {
         final PyObject slackLog = pyInstance.invoke("parse", Py.newUnicode(data));
@@ -46,7 +46,8 @@ public class SlackLogParser extends PyObjectWrapper {
     }
 
     /**
-     * Exposes the SlackLogParser.parse_date method to the Java land.
+     * Parse a time string into a timestamp.
+     *
      * @param date Date string.
      * @return 'datetime.datetime' Python object, or Python None.
      */

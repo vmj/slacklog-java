@@ -10,6 +10,9 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
+/**
+ * Little more than a list of {@link SlackLogEntry} objects.
+ */
 public class SlackLog extends PyObjectWrapper {
     public SlackLog() {
         super(SlackLog.class);
