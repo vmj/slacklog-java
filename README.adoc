@@ -1,3 +1,30 @@
 # Slacklog Java
 
 Java wrapper for Python https://pypi.python.org/pypi/slacklog[slacklog] module.
+
+slacklog provides a program and a library to convert a Slackware
+ChangeLog into other formats.  Currently, RSS, Atom, and PyBlosxom
+formats are supported.
+
+ * Source code: https://github.com/vmj/slacklog-java
+ * Builds status: https://travis-ci.org/vmj/slacklog-java
+ * Docs: https://www.javadoc.io/doc/fi.linuxbox.slacklog/slacklog-java
+
+## Basic usage
+
+To be added ...
+
+## Requirements
+
+Java 8 or newer, and Jython 2.7.1.
+
+The produced JAR will bundle all the required Python code.
+
+## Authors
+
+Original author and current maintainer is Mikko Värri (vmj@linuxbox.fi).
+
+## License
+
+slacklog-java is Free Software, licensed under GNU General Public License
+(GPL), version 3 or later.  See LICENSE.txt file for details.
