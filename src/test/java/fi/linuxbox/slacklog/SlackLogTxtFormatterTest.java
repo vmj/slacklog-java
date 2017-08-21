@@ -36,7 +36,7 @@ public class SlackLogTxtFormatterTest extends JythonTestSupport {
     }
 
     @Test
-    public void testFormatEmtpy() {
+    public void testFormatEmpty() {
         final SlackLogFormatter formatter = formatter();
 
         final SlackLog slackLog = new SlackLog();
@@ -73,6 +73,6 @@ public class SlackLogTxtFormatterTest extends JythonTestSupport {
 
         final String data = formatter.format(slacklog);
         assertNotNull(data);
-        assertEquals(origData, data); // NOTE: fix slacklog: drops empty element(s)
+        assertEquals(origData, data);
     }
 }

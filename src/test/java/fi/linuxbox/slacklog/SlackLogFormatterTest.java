@@ -34,7 +34,7 @@ public class SlackLogFormatterTest extends JythonTestSupport {
     }
 
     @Test
-    public void testFormatEmtpy() {
+    public void testFormatEmpty() {
         final SlackLogFormatter formatter = formatter();
 
         final SlackLog slackLog = new SlackLog();
