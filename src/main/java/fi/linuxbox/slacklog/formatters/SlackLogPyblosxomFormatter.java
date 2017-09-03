@@ -121,10 +121,10 @@ public class SlackLogPyblosxomFormatter extends SlackLogFormatter {
     /**
      * HTML to insert before the entry description.
      *
-     * @param entryDescPreable HTML to insert before the entry description.
+     * @param entryDescPreamble HTML to insert before the entry description.
      */
-    public void setEntryDescPreable(final String entryDescPreable) {
-        setattr("entry_desc_preamble", entryDescPreable);
+    public void setEntryDescPreamble(final String entryDescPreamble) {
+        setattr("entry_desc_preamble", entryDescPreamble);
     }
 
     /**

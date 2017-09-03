@@ -4,7 +4,6 @@ import fi.linuxbox.slacklog.formatters.SlackLogFormatter;
 import fi.linuxbox.slacklog.formatters.SlackLogRssFormatter;
 import fi.linuxbox.slacklog.models.SlackLog;
 import fi.linuxbox.slacklog.parsers.SlackLogParser;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,7 +11,9 @@ import static org.junit.Assert.assertNotNull;
 
 public class SlackLogRssFormatterTest extends JythonTestSupport {
     private SlackLogRssFormatter formatter() {
-        return new SlackLogRssFormatter();
+        final SlackLogRssFormatter formatter = new SlackLogRssFormatter();
+        formatter.setLastBuildDate(getTestDate()); // Make the date handling predictable (testable)
+        return formatter;
     }
 
     @Test
@@ -21,7 +22,6 @@ public class SlackLogRssFormatterTest extends JythonTestSupport {
     }
 
     @Test
-    @Ignore("https://github.com/vmj/slacklog/issues/1")
     public void testFormatEmpty() {
         final SlackLogFormatter formatter = formatter();
 
@@ -29,7 +29,20 @@ public class SlackLogRssFormatterTest extends JythonTestSupport {
 
         final String data = formatter.format(slackLog);
         assertNotNull(data);
-        assertEquals("", data);
+        final String rss1 = "<?xml version=\"1.0\"?>\n" +
+                "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n" +
+                "  <channel>\n" +
+                "    <atom:link href=\"None\" rel=\"self\" type=\"application/rss+xml\" />\n" +
+                "    <title>None ChangeLog</title>\n" +
+                "    <link>None</link>\n" +
+                "    <docs>http://www.rssboard.org/rss-specification</docs>\n" +
+                "    <language>None</language>\n" +
+                "    <pubDate>" + READABLE_TEST_DATE + "</pubDate>\n" +
+                "    <lastBuildDate>" + READABLE_TEST_DATE + "</lastBuildDate>\n" +
+                "    <generator>SlackLog</generator>\n" +
+                "  </channel>\n" +
+                "</rss>\n";
+        assertEquals(rss1, data);
     }
 
     @Test
@@ -78,9 +91,7 @@ public class SlackLogRssFormatterTest extends JythonTestSupport {
                 "    <managingEditor>jane@doe.net (Jane Doe)</managingEditor>\n" +
                 "    <webMaster>john@doe.net (John Doe)</webMaster>\n" +
                 "    <pubDate>Fri, 18 Oct 2013 02:41:09 GMT</pubDate>\n" +
-                "    <lastBuildDate>";
-        // lastBuildDate is a timestamp or runtime.
-        final String rss2 = "</lastBuildDate>\n" +
+                "    <lastBuildDate>" + READABLE_TEST_DATE + "</lastBuildDate>\n" +
                 "    <generator>SlackLog</generator>\n" +
                 "    <item>\n" +
                 "      <guid isPermaLink=\"true\">http://expected.url/changes.html#20131018T024109Z</guid>\n" +
@@ -104,7 +115,6 @@ public class SlackLogRssFormatterTest extends JythonTestSupport {
                 "    </item>\n" +
                 "  </channel>\n" +
                 "</rss>\n";
-        assertEquals(rss1, data.substring(0, rss1.length()));
-        assertEquals(rss2, data.substring(data.length() - rss2.length()));
+        assertEquals(rss1, data);
     }
 }

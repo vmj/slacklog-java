@@ -46,7 +46,7 @@ repositories {
 
 dependencies {
     // Bundle slacklog
-    jython ":slacklog:0.9.2"
+    jython ":slacklog:0.9.4"
 
     // Since jython plugin does not do transitive dependencies,
     // we need to bring those in.
@@ -54,7 +54,7 @@ dependencies {
     // slacklog depends on python-dateutil.
     // The artifact name is different from module name
     // hence the ":dateutil" suffix.
-    jython ":python-dateutil:2.6.0:dateutil"
+    jython ":python-dateutil:2.6.1:dateutil"
 
     // python-dateutil depends on six.
     // There's no module at all, just six.py at the root of the archive,

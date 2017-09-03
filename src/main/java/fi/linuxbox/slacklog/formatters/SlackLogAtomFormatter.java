@@ -1,5 +1,7 @@
 package fi.linuxbox.slacklog.formatters;
 
+import org.python.core.PyObject;
+
 /**
  * Concrete SlackLog formatter that generates an Atom feed.
  */
@@ -53,5 +55,15 @@ public class SlackLogAtomFormatter extends SlackLogFormatter {
      */
     public void setEmail(final String email) {
         setattr("email", email);
+    }
+    /**
+     * Timestamp when this feed was last generated.
+     * <p>
+     *     If this is not set, the current timestamp will be generated.
+     * </p>
+     * @param updated Feed generation timestamp.
+     */
+    public void setUpdated(final PyObject updated) {
+        setattr("updated", updated);
     }
 }

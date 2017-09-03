@@ -7,9 +7,6 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * An entry in a {@link SlackLogEntry}.
- * <p>
- *     Consists of a unicode package identifier and a unicode description.
- * </p>
  */
 public class SlackLogPkg extends PyObjectWrapper {
     private final SlackLogEntry entry;
@@ -35,15 +32,29 @@ public class SlackLogPkg extends PyObjectWrapper {
         this.entry = entry;
     }
 
-
+    /**
+     * A unicode package identifier.
+     *
+     * @return Package identifier.
+     */
     public String getPkg() {
         return getattr("pkg", String.class);
     }
 
+    /**
+     * A unicode description.
+     *
+     * @return Package description.
+     */
     public String getDescription() {
         return getattr("description", String.class);
     }
 
+    /**
+     * Reference to the {@link SlackLogEntry} that contains this package.
+     *
+     * @return The entry containing this package.
+     */
     public SlackLogEntry getEntry() {
         return entry;
     }

@@ -18,7 +18,7 @@ public class SlackLogParser extends PyObjectWrapper {
      *
      * @param quiet {@code true} if output is not allowed
      */
-    public void setQuiet(final boolean quiet) {
+    public void setQuiet(final Boolean quiet) {
         setattr("quiet", quiet);
     }
 

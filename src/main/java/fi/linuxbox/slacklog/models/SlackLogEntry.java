@@ -12,32 +12,7 @@ import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
 
 /**
- * An entry in a SlackLog.
- * <p>
- *     Consist of a timestamp in UTC, and a unicode description which may be
- *     empty.
- * </p>
- * <p>
- *     Also contains a list of {@link SlackLogPkg} objects.
- * </p>
- * <p>
- *     Since 0.9.1 a checksum was added, which is either None or a unicode
- *     string.  If using the default parser, the value is a SHA-512 as a
- *     HEX string (and never None), and identifies the entry by content.
- *     Note that two entries in different changelogs may have the same
- *     checksum, but different parents.
- * </p>
- * <p>
- *      Since 0.9.1 an identifier was added, which is either None or a
- *      unicode string.  If using the default parser, the value is a SHA-512
- *      as a HEX string (and never None), and identifies the entry by
- *      content and parent.
- * </p>
- * <p>
- *     Since 0.9.1 a parent was added, which is either None or a unicode
- *     string.  If using the default parser, the value is the identifier of
- *     the next (older) log entry.
- * </p>
+ * An entry in a {@link SlackLog}.
  */
 public class SlackLogEntry extends PyObjectWrapper {
     private final SlackLog log;
@@ -69,31 +44,77 @@ public class SlackLogEntry extends PyObjectWrapper {
         this.log = log;
     }
 
+    /**
+     * Entry timestamp in UTC.
+     *
+     * @return Entry timestamp.
+     */
     /*
     public PyObject getTimestamp() {
         return getattr("timestamp"); // TODO: datetime.datetime -> ZonedDateTime
     }
     */
 
+    /**
+     * A unicode description which may be empty.
+     *
+     * @return Entry description.
+     */
     public String getDescription() {
         return getattr("description", String.class);
     }
 
+    /**
+     * Reference to the {@link SlackLog} that contains this entry.
+     *
+     * @return The log containing this entry.
+     */
     public SlackLog getLog() {
         return log;
     }
 
+    /**
+     * A unicode checksum or <code>null</code>.
+     * <p>
+     *     This should identify the entry by content.  Two different logs may have the same entry,
+     *     but those entries have different parent.
+     * </p>
+     * @return Entry checksum.
+     */
     public String getChecksum() {
         return getattr("checksum", String.class);
     }
 
+    /**
+     * A unicode identifier or <code>null</code>.
+     * <p>
+     *     This should identify the entry by content and parent.
+     * </p>
+     * @return Entry identifier.
+     */
     public String getIdentifier() {
         return getattr("identifier", String.class);
     }
 
+    /**
+     * A unicode parent identifier or <code>null</code>.
+     *
+     * @return Entry parent identifier.
+     */
     public String getParent() {
         return getattr("parent", String.class);
     }
+
+    /**
+     * The original timezone of the entry as ? or <code>null</code>.
+     *
+     * @return Original entry timezone.
+     */
+    /*
+    public PyObject getTimezone() {
+        return getattr("timezone"); // TODO: datetime.tzinfo -> ?
+    }
+    */
 
     /**
      * Returns the list of packages in this entry.

@@ -1,5 +1,7 @@
 package fi.linuxbox.slacklog.formatters;
 
+import org.python.core.PyObject;
+
 /**
  * Concrete SlackLog formatter that generates an RSS feed.
  */
@@ -78,5 +80,16 @@ public class SlackLogRssFormatter extends SlackLogFormatter {
      */
     public void setWebMaster(final String webMaster) {
         setattr("webMaster", webMaster);
+    }
+
+    /**
+     * Timestamp when this feed was last generated.
+     * <p>
+     *     If this is not set, the current timestamp will be generated.
+     * </p>
+     * @param lastBuildDate Feed generation timestamp.
+     */
+    public void setLastBuildDate(final PyObject lastBuildDate) {
+        setattr("lastBuildDate", lastBuildDate);
     }
 }

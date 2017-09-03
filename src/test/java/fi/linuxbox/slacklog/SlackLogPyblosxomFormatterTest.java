@@ -1,6 +1,5 @@
 package fi.linuxbox.slacklog;
 
-import fi.linuxbox.slacklog.formatters.SlackLogFormatter;
 import fi.linuxbox.slacklog.formatters.SlackLogPyblosxomFormatter;
 import fi.linuxbox.slacklog.models.SlackLog;
 import fi.linuxbox.slacklog.parsers.SlackLogParser;
@@ -11,7 +10,6 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 public class SlackLogPyblosxomFormatterTest extends JythonTestSupport {
@@ -43,6 +41,7 @@ public class SlackLogPyblosxomFormatterTest extends JythonTestSupport {
         // No FS activity since pyblosxom formatter only deals with entries
         // (but JUnit actually creates the directory)
         final File[] files = entriesDir.listFiles();
+        assertNotNull(files);
         assertEquals(0, files.length);
     }
 
@@ -63,7 +62,7 @@ public class SlackLogPyblosxomFormatterTest extends JythonTestSupport {
         formatter.setBackup(true);
         formatter.setEntryPreamble("---\n");
         formatter.setEntryPostamble("");
-        formatter.setEntryDescPreable("");
+        formatter.setEntryDescPreamble("");
         formatter.setEntryDescPostamble("");
         formatter.setEntryPkgsPreamble("");
         formatter.setEntryPkgsPostamble("");

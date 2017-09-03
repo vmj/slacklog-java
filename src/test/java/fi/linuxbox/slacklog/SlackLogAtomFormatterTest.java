@@ -11,7 +11,9 @@ import static org.junit.Assert.assertNotNull;
 
 public class SlackLogAtomFormatterTest extends JythonTestSupport {
     private SlackLogAtomFormatter formatter() {
-        return new SlackLogAtomFormatter();
+        final SlackLogAtomFormatter formatter = new SlackLogAtomFormatter();
+        formatter.setUpdated(getTestDate()); // Make the date handling predictable (testable)
+        return formatter;
     }
 
     @Test
@@ -27,22 +29,18 @@ public class SlackLogAtomFormatterTest extends JythonTestSupport {
 
         final String data = formatter.format(slackLog);
         assertNotNull(data);
-        final String atom1 = "<?xml version=\"1.0\"?>\n" +
+        assertEquals("<?xml version=\"1.0\"?>\n" +
                 "<feed xmlns=\"http://www.w3.org/2005/Atom\">\n" +
                 "    <link href=\"None\" rel=\"self\" type=\"application/rss+xml\" />\n" +
                 "    <title>None ChangeLog</title>\n" +
                 "    <link href=\"None\" />\n" +
-                "    <updated>";
-        // updated is a timestamp or runtime.
-        final String atom2 = "</updated>\n" +
+                "    <updated>" + ATOM_TEST_DATE + "</updated>\n" +
                 "    <author>\n" +
                 "        <name>None</name>\n" +
                 "        <email>None</email>\n" +
                 "    </author>\n" +
                 "    <id>None</id>\n" +
-                "</feed>\n";
-        assertEquals(atom1, data.substring(0, atom1.length()));
-        assertEquals(atom2, data.substring(data.length() - atom2.length()));
+                "</feed>\n", data);
     }
 
     @Test
@@ -77,14 +75,12 @@ public class SlackLogAtomFormatterTest extends JythonTestSupport {
 
         final String data = formatter.format(slacklog);
         assertNotNull(data);
-        final String atom1 = "<?xml version=\"1.0\"?>\n" +
+        assertEquals("<?xml version=\"1.0\"?>\n" +
                 "<feed xmlns=\"http://www.w3.org/2005/Atom\">\n" +
                 "    <link href=\"http://expected.url/changes.atom\" rel=\"self\" type=\"application/rss+xml\" />\n" +
                 "    <title>Slackware64 -current ChangeLog</title>\n" +
                 "    <link href=\"http://expected.url/changes.html\" />\n" +
-                "    <updated>";
-        // updated is a timestamp or runtime.
-        final String atom2 = "</updated>\n" +
+                "    <updated>" + ATOM_TEST_DATE + "</updated>\n" +
                 "    <author>\n" +
                 "        <name>Jane Doe</name>\n" +
                 "        <email>jane@doe.net</email>\n" +
@@ -111,8 +107,6 @@ public class SlackLogAtomFormatterTest extends JythonTestSupport {
                 "  (* Security fix *)\n" +
                 "</pre>]]></content>\n" +
                 "    </entry>\n" +
-                "</feed>\n";
-        assertEquals(atom1, data.substring(0, atom1.length()));
-        assertEquals(atom2, data.substring(data.length() - atom2.length()));
+                "</feed>\n", data);
     }
 }

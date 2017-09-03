@@ -64,11 +64,11 @@ public class SlackLogTxtFormatterTest extends JythonTestSupport {
                 "    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4231\n" +
                 "    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4232\n" +
                 "    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4244\n" +
-                "  (* Security fix *)\n";
+                "  (* Security fix *)\n" +
+                "+--------------------------+\n";
 
         final SlackLogParser parser = new SlackLogParser();
-        final SlackLog slacklog = parser.parse(origData +
-                "+--------------------------+\n");
+        final SlackLog slacklog = parser.parse(origData );
         assertNotNull(slacklog);
 
         final String data = formatter.format(slacklog);
