@@ -1,6 +1,6 @@
 package fi.linuxbox.slacklog.formatters;
 
-import org.python.core.PyObject;
+import java.time.ZonedDateTime;
 
 /**
  * Concrete SlackLog formatter that generates an RSS feed.
@@ -89,7 +89,7 @@ public class SlackLogRssFormatter extends SlackLogFormatter {
      * </p>
      * @param lastBuildDate Feed generation timestamp.
      */
-    public void setLastBuildDate(final PyObject lastBuildDate) {
+    public void setLastBuildDate(final ZonedDateTime lastBuildDate) {
         setattr("lastBuildDate", lastBuildDate);
     }
 }

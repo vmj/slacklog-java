@@ -5,6 +5,8 @@ import fi.linuxbox.slacklog.models.SlackLog;
 import org.python.core.Py;
 import org.python.core.PyObject;
 
+import java.time.ZonedDateTime;
+
 /**
  * Parser for recent (12.x and newer) Slackware ChangeLogs.
  */
@@ -30,7 +32,7 @@ public class SlackLogParser extends PyObjectWrapper {
      * </p>
      * @param datetime Either 'datetime.datetime' or None.
      */
-    public void setMinDate(final PyObject datetime) {
+    public void setMinDate(final ZonedDateTime datetime) {
         setattr("min_date", datetime);
     }
 
@@ -51,10 +53,10 @@ public class SlackLogParser extends PyObjectWrapper {
      * @param date Date string.
      * @return 'datetime.datetime' Python object, or Python None.
      */
-    public PyObject parseDate(final String date) {
+    public ZonedDateTime parseDate(final String date) {
         final PyObject arg = date != null
                 ? Py.newUnicode(date)
                 : Py.None;
-        return pyInstance.invoke("parse_date", arg);
+        return toJavaDateTime(pyInstance.invoke("parse_date", arg));
     }
 }

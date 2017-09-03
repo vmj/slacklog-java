@@ -1,6 +1,6 @@
 package fi.linuxbox.slacklog.formatters;
 
-import org.python.core.PyObject;
+import java.time.ZonedDateTime;
 
 /**
  * Concrete SlackLog formatter that generates an Atom feed.
@@ -63,7 +63,7 @@ public class SlackLogAtomFormatter extends SlackLogFormatter {
      * </p>
      * @param updated Feed generation timestamp.
      */
-    public void setUpdated(final PyObject updated) {
+    public void setUpdated(final ZonedDateTime updated) {
         setattr("updated", updated);
     }
 }

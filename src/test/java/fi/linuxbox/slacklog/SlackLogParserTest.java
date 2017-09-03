@@ -7,6 +7,7 @@ import fi.linuxbox.slacklog.parsers.SlackLogParser;
 import org.junit.Test;
 import org.python.core.PyObject;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -30,7 +31,7 @@ public class SlackLogParserTest extends JythonTestSupport {
     @Test
     public void testSetMinDate() {
         final SlackLogParser parser = parser();
-        final PyObject minDate = parser.parseDate("Wed May  7 16:13:31 CDT 2008");
+        final ZonedDateTime minDate = parser.parseDate("Wed May  7 16:13:31 CDT 2008");
 
         parser.setMinDate(minDate);
         parser.setMinDate(null);

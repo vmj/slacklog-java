@@ -68,7 +68,7 @@ public class SlackLogTxtFormatterTest extends JythonTestSupport {
                 "+--------------------------+\n";
 
         final SlackLogParser parser = new SlackLogParser();
-        final SlackLog slacklog = parser.parse(origData );
+        final SlackLog slacklog = parser.parse(origData);
         assertNotNull(slacklog);
 
         final String data = formatter.format(slacklog);

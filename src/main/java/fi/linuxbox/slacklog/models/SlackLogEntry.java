@@ -4,6 +4,7 @@ import fi.linuxbox.slacklog.PyObjectWrapper;
 import org.python.core.Py;
 import org.python.core.PyObject;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +50,9 @@ public class SlackLogEntry extends PyObjectWrapper {
      *
      * @return Entry timestamp.
      */
-    /*
-    public PyObject getTimestamp() {
-        return getattr("timestamp"); // TODO: datetime.datetime -> ZonedDateTime
+    public ZonedDateTime getTimestamp() {
+        return getattr("timestamp", ZonedDateTime.class);
     }
-    */
 
     /**
      * A unicode description which may be empty.
