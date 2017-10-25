@@ -4,6 +4,7 @@ import fi.linuxbox.slacklog.PyObjectWrapper;
 import org.python.core.Py;
 import org.python.core.PyObject;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,11 +110,25 @@ public class SlackLogEntry extends PyObjectWrapper {
      *
      * @return Original entry timezone.
      */
-    /*
-    public PyObject getTimezone() {
-        return getattr("timezone"); // TODO: datetime.tzinfo -> ?
+    public ZoneOffset getTimezone() {
+        final PyObject tzinfo = getattr("timezone");
+        if (tzinfo == null || tzinfo.equals(Py.None))
+            return null;
+
+        final PyObject timestamp = getattr("timestamp");
+        if (timestamp == null || timestamp.equals(Py.None))
+            return null;
+
+        final PyObject orig = timestamp.invoke("astimezone", tzinfo);
+
+        final PyObject timedelta = orig.invoke("utcoffset");
+        if (timedelta == null || timedelta.equals(Py.None))
+            return null;
+
+        final double total_seconds = (double) timedelta.invoke("total_seconds").__tojava__(Double.class);
+
+        return ZoneOffset.ofTotalSeconds((int)total_seconds);
     }
-    */
 
     /**
      * Returns the list of packages in this entry.

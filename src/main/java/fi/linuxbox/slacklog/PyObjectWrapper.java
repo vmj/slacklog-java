@@ -78,7 +78,7 @@ public abstract class PyObjectWrapper {
         pyInstance.__setattr__(name, pyValue);
     }
 
-    // entry.getTimestamp() and parser.parseDate(String) use this
+    // SlackLogParser.parseDate(String) first uses Python side to parse (which converts to UTC) and then calls this.
     protected static ZonedDateTime toJavaDateTime(final PyObject datetime) {
         if (datetime == null || datetime.equals(Py.None))
             return null;
@@ -106,7 +106,7 @@ public abstract class PyObjectWrapper {
             nanoOfSecond = 1000 * microsecond;
         }
 
-        // TODO: tzinfo
+        // Only UTC expected here
         final ZoneOffset zoneOffset = ZoneOffset.ofTotalSeconds(0); // from -64800 to +64800 (+-18 hours)
 
         final ZonedDateTime zdt = ZonedDateTime.of(year, month, dayOfMonth, hour, minute, second, nanoOfSecond, zoneOffset);
@@ -118,12 +118,20 @@ public abstract class PyObjectWrapper {
         return zdt;
     }
 
-    // setSomething(ZonedDateTime) use this
+    // SlackLogAtomFormatter.setUpdated(ZonedDateTime) - on Python side, not enforced but assumed UTC
+    // SlackLogRssFormatter.setLastBuildDate(ZonedDateTime) - on Python side, not enforced but assumed UTC
+    // SlackLogParser.setMinDate(ZonedDateTime) - on Python side, tzinfo not specified
+    //
+    //  In all above, the Python script functions all use parser.parse_date(unicode) to set those dates.
+    //  I.e. they all use UTC.
     protected static PyObject toPyDateTime(final ZonedDateTime datetime) {
         if (datetime == null)
             return Py.None;
         if (datetime.getOffset().getTotalSeconds() != 0)
             throw new IllegalArgumentException("only 0 offset supported for now");
+
+        final PyObject tz = PyClassImporter.importClass("dateutil", "tz");
+        final PyObject tzinfo = tz.invoke("tzutc");
 
         final PyObject pyClass = PyClassImporter.importClass("datetime", "datetime");
         final PyObject pyDateTime = pyClass.__call__(Py.javas2pys(
@@ -133,9 +141,10 @@ public abstract class PyObjectWrapper {
                 datetime.getHour(),
                 datetime.getMinute(),
                 datetime.getSecond(),
-                datetime.getNano() / 1000 // microsecond fractions will get lost
-                // TODO: ztinfo
+                datetime.getNano() / 1000, // microsecond fractions will get lost
+                tzinfo
         ));
+
         return pyDateTime;
     }
 }
