@@ -1,7 +1,7 @@
 plugins {
-    id 'com.gradle.build-scan' version '1.8'
+    id 'com.gradle.build-scan' version '1.10'
     id 'java-library'
-    id "com.github.hierynomus.jython" version "0.6.0"
+    id "com.github.hierynomus.jython" version "0.8.0"
     id "com.bmuschko.nexus" version "2.3.1"
 }
 group = 'fi.linuxbox.slacklog'
@@ -59,7 +59,7 @@ dependencies {
     // python-dateutil depends on six.
     // There's no module at all, just six.py at the root of the archive,
     // hence the configuration closure.
-    jython(":six:1.10.0") {
+    jython(":six:1.11.0") {
         artifact {
             name = "six"
             extension = "py"
