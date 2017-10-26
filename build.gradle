@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fi.linuxbox.slacklog'
-version = '0.9.4'
+version = '0.9.5-SNAPSHOT'
 
 modifyPom {
     project {
