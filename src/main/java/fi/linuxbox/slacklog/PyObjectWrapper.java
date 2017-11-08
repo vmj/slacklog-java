@@ -21,9 +21,13 @@ public abstract class PyObjectWrapper {
         this.pyInstance = pyClass.__call__();
     }
 
+    protected PyObjectWrapper(final String pyModuleName,
+                              final Class klass) {
+        this(pyModuleName, klass.getSimpleName());
+    }
+
     protected PyObjectWrapper(final Class klass) {
-        this(klass.getPackage().getName().substring(javaPackagePrefixLen),
-                klass.getSimpleName());
+        this(klass.getPackage().getName().substring(javaPackagePrefixLen), klass);
     }
 
     protected PyObjectWrapper() {

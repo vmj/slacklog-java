@@ -17,7 +17,12 @@ public class SlackLogFormatter extends PyObjectWrapper {
     public SlackLogFormatter() {
         super(SlackLogFormatter.class);
     }
-
+    protected SlackLogFormatter(final String pyModuleName, final String pyClassName) {
+        super(pyModuleName, pyClassName);
+    }
+    protected SlackLogFormatter(final String pyModuleName, final Class<? extends SlackLogFormatter> klass) {
+        super(pyModuleName, klass);
+    }
     protected SlackLogFormatter(final Class<? extends SlackLogFormatter> klass) {
         super(klass);
     }
