@@ -49,7 +49,7 @@ import com.hierynomus.gradle.plugins.jython.dependency.PythonDependency
 
 dependencies {
     // Bundle slacklog
-    jython(":slacklog:0.9.4")
+    jython(":slacklog:0.9.5")
 
     // Since jython plugin does not do transitive dependencies,
     // we need to bring those in.
@@ -57,12 +57,12 @@ dependencies {
     // slacklog depends on python-dateutil.  We depend on it directly, too.
     // The artifact name is different from module name
     // hence the ":dateutil" suffix.
-    jython(":python-dateutil:2.6.1:dateutil")
+    jython(":python-dateutil:2.7.3:dateutil")
 
     // python-dateutil depends on six.
     // There's no module at all, just six.py at the root of the archive,
     // hence the configuration closure.
-    jython(PythonDependency.create(":six:1.9.0", {
+    jython(PythonDependency.create(":six:1.11.0", {
         useModuleName = false // Copy not to moduleName 'six', but rather to the root
         copy {
             from "six.py" // Will only copy six.py
