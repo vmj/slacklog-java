@@ -4,7 +4,6 @@ import fi.linuxbox.slacklog.parsers.SlackLogParser;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.python.core.Py;
-import org.python.core.PyObject;
 import org.python.core.PySystemState;
 
 import java.time.ZonedDateTime;

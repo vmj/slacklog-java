@@ -1,18 +1,9 @@
-= Slacklog Java
+package fi.linuxbox.slacklog;
 
-Java wrapper for Python https://pypi.python.org/pypi/slacklog[slacklog] module.
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-slacklog-java provides a library to convert a Slackware ChangeLog into other formats.
-Currently, RSS, Atom, JSON and PyBlosxom formats are supported.
-
- * Source code: https://github.com/vmj/slacklog-java
- * Builds status: https://travis-ci.org/vmj/slacklog-java
- * Docs: https://www.javadoc.io/doc/fi.linuxbox.slacklog/slacklog-java
-
-== Example usage
-
-[source,java]
-----
 import fi.linuxbox.slacklog.formatters.SlackLogJsonFormatter;
 import fi.linuxbox.slacklog.models.SlackLog;
 import fi.linuxbox.slacklog.parsers.SlackLogParser;
@@ -27,9 +18,10 @@ import java.nio.file.Paths;
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class Example {
+public class ExampleTest {
 
-    public static void main(String... args) throws IOException {
+    @Test
+    public void test() throws IOException {
         // Initialize Jython
         PySystemState.initialize();
 
@@ -51,27 +43,21 @@ public class Example {
         Py.getSystemState().close();
     }
 
-    private static String read(final String path, final Charset charset) throws IOException {
+    private String read(final String path, final Charset charset) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)), charset);
     }
 
-    private static void write(final String path, final byte[] data) throws IOException {
+    private void write(final String path, final byte[] data) throws IOException {
         Files.write(Paths.get(path), data);
     }
+
+    @BeforeClass
+    public static void setup() throws Exception {
+        Files.delete(Paths.get("src/test/resources/ChangeLog.json"));
+    }
+
+    @AfterClass
+    public static void tearDown() throws Exception {
+        Files.delete(Paths.get("src/test/resources/ChangeLog.json"));
+    }
 }
-----
-
-== Requirements
-
-Java 8 or newer, and Jython 2.7.1.
-
-The produced JAR will bundle all the required Python code.
-
-== Authors
-
-Original author and current maintainer is Mikko Värri (vmj@linuxbox.fi).
-
-== License
-
-slacklog-java is Free Software, licensed under GNU General Public License
-(GPL), version 3 or later.  See LICENSE.txt file for details.
