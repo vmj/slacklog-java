@@ -13,6 +13,7 @@ import org.python.core.PySystemState;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
@@ -53,7 +54,11 @@ public class ExampleTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        Files.delete(Paths.get("src/test/resources/ChangeLog.json"));
+        try {
+            Files.delete(Paths.get("src/test/resources/ChangeLog.json"));
+        } catch (final NoSuchFileException e) {
+            // OK
+        }
     }
 
     @AfterClass
