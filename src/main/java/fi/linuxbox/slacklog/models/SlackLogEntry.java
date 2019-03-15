@@ -22,15 +22,19 @@ public class SlackLogEntry extends PyObjectWrapper {
                          final SlackLog log,
                          final String checksum,
                          final String identifier,
-                         final String parent) {
+                         final String parent,
+                         final ? timezone,
+                         final boolean twelveHourFormat) {
         final PyObject pyClass = importClass(SlackLogEntry.class);
         pyInstance = pyClass.__call__(new PyObject[] {
                 Py.java2py(timestamp),
                 new PyUnicode(description),
-                log.asPyObject(),
+                log.unwrap(),
                 new PyUnicode(checksum),
                 new PyUnicode(identifier),
-                new PyUnicode(parent) });
+                new PyUnicode(parent),
+                new ?(timezone),
+                new PyBoolean(twelveHourFormat) });
     }
     */
 
@@ -103,7 +107,7 @@ public class SlackLogEntry extends PyObjectWrapper {
     }
 
     /**
-     * The original timezone of the entry as ? or <code>null</code>.
+     * The original timezone of the entry as ZoneOffset or <code>null</code>.
      *
      * @return Original entry timezone.
      */
@@ -125,6 +129,15 @@ public class SlackLogEntry extends PyObjectWrapper {
         final double total_seconds = (double) timedelta.invoke("total_seconds").__tojava__(Double.class);
 
         return ZoneOffset.ofTotalSeconds((int)total_seconds);
+    }
+
+    /**
+     * Whether the original timestamp was in twelve hour format.
+     *
+     * @return <code>true</code> if it was, <code>false</code> otherwise.
+     */
+    public boolean getTwelveHourFormat() {
+        return getattr("twelveHourFormat", Boolean.class);
     }
 
     /**

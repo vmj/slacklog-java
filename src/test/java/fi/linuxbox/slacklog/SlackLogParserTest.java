@@ -75,6 +75,7 @@ public class SlackLogParserTest extends JythonTestSupport {
         assertNotNull(slackLogEntry);
         assertTrue(slackLogEntry.getLog() == slacklog);
         assertEquals("", slackLogEntry.getDescription());
+        assertFalse(slackLogEntry.getTwelveHourFormat());
 
         final List<SlackLogPkg> pkgs = slackLogEntry.getPkgs();
         assertNotNull(pkgs);
