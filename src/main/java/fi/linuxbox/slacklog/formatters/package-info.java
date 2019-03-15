@@ -9,13 +9,13 @@
  * </p>
  * <p>
  *     Currently, the following formatters are provided:
- *     <ul>
- *       <li>{@link fi.linuxbox.slacklog.formatters.SlackLogTxtFormatter} tries to reproduce the original ChangeLog.txt.</li>
- *       <li>{@link fi.linuxbox.slacklog.formatters.SlackLogRssFormatter} produces an RSS feed.</li>
- *       <li>{@link fi.linuxbox.slacklog.formatters.SlackLogAtomFormatter} produces an Atom feed.</li>
- *       <li>{@link fi.linuxbox.slacklog.formatters.SlackLogJsonFormatter} produces a JSON representation.</li>
- *       <li>{@link fi.linuxbox.slacklog.formatters.SlackLogPyblosxomFormatter} writes the log entries to PyBlosxom HTML entries.</li>
- *     </ul>
  * </p>
+ * <ul>
+ *   <li>{@link fi.linuxbox.slacklog.formatters.SlackLogTxtFormatter} tries to reproduce the original ChangeLog.txt.</li>
+ *   <li>{@link fi.linuxbox.slacklog.formatters.SlackLogRssFormatter} produces an RSS feed.</li>
+ *   <li>{@link fi.linuxbox.slacklog.formatters.SlackLogAtomFormatter} produces an Atom feed.</li>
+ *   <li>{@link fi.linuxbox.slacklog.formatters.SlackLogJsonFormatter} produces a JSON representation.</li>
+ *   <li>{@link fi.linuxbox.slacklog.formatters.SlackLogPyblosxomFormatter} writes the log entries to PyBlosxom HTML entries.</li>
+ * </ul>
  */
 package fi.linuxbox.slacklog.formatters;
