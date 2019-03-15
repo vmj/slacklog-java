@@ -1,14 +1,9 @@
 package fi.linuxbox.slacklog.models;
 
 import fi.linuxbox.slacklog.PyObjectWrapper;
-import org.python.core.Py;
 import org.python.core.PyObject;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
 
 /**
  * Little more than a list of {@link SlackLogEntry} objects.
@@ -62,20 +57,7 @@ public class SlackLog extends PyObjectWrapper {
      * @return A non-null list of {@link SlackLogEntry} instances.
      */
     public List<SlackLogEntry> getEntries() {
-        final PyObject pySeq = getattr("entries");
-        if (pySeq == null || pySeq.equals(Py.None) || !pySeq.isSequenceType())
-            return emptyList();
-
-        final int len = pySeq.__len__();
-
-        final List<SlackLogEntry> list = new ArrayList<>(len);
-
-        for (int i = 0; i < len; i++) {
-            final PyObject pyEntry = pySeq.__getitem__(i);
-            list.add(new SlackLogEntry(pyEntry, this));
-        }
-
-        return unmodifiableList(list);
+        return getseq("entries", (pyEntry) -> new SlackLogEntry(pyEntry, this));
     }
 
     public PyObject unwrap() {

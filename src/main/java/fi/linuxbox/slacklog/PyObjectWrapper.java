@@ -6,8 +6,13 @@ import org.python.core.PyUnicode;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 import static fi.linuxbox.slacklog.PyClassImporter.importClass;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
 
 public abstract class PyObjectWrapper {
     private static final int javaPackagePrefixLen = "fi.linuxbox.".length();
@@ -80,6 +85,23 @@ public abstract class PyObjectWrapper {
                 ? value
                 : Py.None;
         pyInstance.__setattr__(name, pyValue);
+    }
+
+    protected <T> List<T> getseq(final String attr, final Function<PyObject, T> maker) {
+        final PyObject pySeq = getattr(attr);
+        if (pySeq == null || pySeq.equals(Py.None) || !pySeq.isSequenceType())
+            return emptyList();
+
+        final int len = pySeq.__len__();
+
+        final List<T> list = new ArrayList<>(len);
+
+        for (int i = 0; i < len; i++) {
+            final PyObject pyObject = pySeq.__getitem__(i);
+            list.add(maker.apply(pyObject));
+        }
+
+        return unmodifiableList(list);
     }
 
     // SlackLogParser.parseDate(String) first uses Python side to parse (which converts to UTC) and then calls this.

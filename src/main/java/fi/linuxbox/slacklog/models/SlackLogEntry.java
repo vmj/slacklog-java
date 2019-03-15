@@ -6,11 +6,8 @@ import org.python.core.PyObject;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -140,20 +137,7 @@ public class SlackLogEntry extends PyObjectWrapper {
      * @return A non-null list of {@link SlackLogPkg} instances.
      */
     public List<SlackLogPkg> getPkgs() {
-        final PyObject pySeq = getattr("pkgs");
-        if (pySeq == null || pySeq.equals(Py.None) || !pySeq.isSequenceType())
-            return emptyList();
-
-        final int len = pySeq.__len__();
-
-        final List<SlackLogPkg> list = new ArrayList<>(len);
-
-        for (int i = 0; i < len; i++) {
-            final PyObject pyPkg = pySeq.__getitem__(i);
-            list.add(new SlackLogPkg(pyPkg, this));
-        }
-
-        return unmodifiableList(list);
+        return getseq("pkgs", (pyPkg) -> new SlackLogPkg(pyPkg, this));
     }
 
     /*
