@@ -10,7 +10,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Base class for SlackLog formatters.
  * <p>
- *      This class is ment for subclassing.
+ *      This class is meant for subclassing.
  * </p>
  */
 public class SlackLogFormatter extends PyObjectWrapper {

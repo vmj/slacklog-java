@@ -37,7 +37,7 @@ public class SlackLogParser extends PyObjectWrapper {
     }
 
     /**
-     * EReturn the in-memory representation of the data.
+     * Return the in-memory representation of the data.
      *
      * @param data ChangeLog.txt contents
      * @return {@link SlackLog} instance
