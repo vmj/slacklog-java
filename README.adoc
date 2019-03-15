@@ -63,9 +63,9 @@ public class Example {
 
 == Requirements
 
-Java 8 or newer, and Jython 2.7.1.
-
-The produced JAR will bundle all the required Python code.
+Slacklog Java requires Java 8.  This library is available at
+http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22fi.linuxbox.slacklog%22[The Central Repository] and
+https://bintray.com/search?sort=last_updated&query=fi.linuxbox.slacklog[jcenter]
 
 == Authors
 
