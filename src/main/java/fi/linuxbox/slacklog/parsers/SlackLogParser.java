@@ -8,7 +8,7 @@ import org.python.core.PyObject;
 import java.time.ZonedDateTime;
 
 /**
- * Parser for recent (12.x and newer) Slackware ChangeLogs.
+ * Parser for Slackware ChangeLog.txt files.  This implementation works for 12.x and newer Slackware versions.
  */
 public class SlackLogParser extends PyObjectWrapper {
     public SlackLogParser() {
